@@ -7,19 +7,15 @@ import axios from "axios";
 import { ImportExport } from "@material-ui/icons";
 
 const PRODUCT_TYPE_SPOT = "SPOT",
-  // PRODUCT_TYPE_FIXED = "FIXED",
   PRODUCT_TYPE_PURCHASE = "PURCHASE",
-  // PRODUCT_TYPE_VARIABLE = "VARIABLE",
   PRODUCT_TYPE_CUSTOM = "CUSTOM",
   PRODUCT_TYPE_HOURLY_SPOT = "HOURLY SPOT",
-
   PRICE_TYPE_SPOT = "SPOT";
-
-
+  
 export default function Check() {
   const [data, setData] = useState([]);
   const [flag, setFlag] = useState(false);
-  const [country, setCountry] = useState([]);
+  const [country, setCountry] = useState(["react", "angular"]);
   const [selcountry, setSelcountry] = useState(1);
   const [consumption, setConsumption] = useState([
     "5000",
@@ -221,43 +217,26 @@ export default function Check() {
         );
       return element.productType === filter;
     }).sort((a, b) => (a.finalfullMonthlyElectricityPricePrice > b.finalfullMonthlyElectricityPricePrice) ? 1 : -1 );
-  console.log("processdata", processdata);
   const filtering = (val) => {
     setFilter(val);
   };
   useEffect(() => {
-    const fetchdata = async () => {
-      const fetchcountry = await axios.post(
+    const fetchcountrydata = async () => {
+      const fetchcountry = await axios.get(
         "https://www.strompris.no/rest/municipalities"
       );
-      // const countries = fetchcountry.data.data.map((element) => element.name);
-      const countries = fetchcountry.data.data;
+      const countries = fetchcountry.data;
       setCountry(countries);
-
-      const fetchweekdata = await axios.post(
-        "https://webflow111.herokuapp.com/week"
-      );
-
-      let consumptionlist = [];
-      fetchweekdata.data.data.map((element) => {
-        if (
-          element.Consumption &&
-          element.Consumption !== null &&
-          consumptionlist.indexOf(element.Consumption) === -1
-        )
-          return consumptionlist.push(element.Consumption);
-      });
-      setConsumption(consumptionlist);
     };
-    fetchdata();
+    fetchcountrydata();
   }, []);
 
   const fetchdata = async () => {
     setFlag(true);
     const fetchdata = await axios.get(
-      `https://webflow111.herokuapp.com/api/?country=${selcountry}`
+      `https://www.strompris.no/rest/products/get/municipality/${selcountry}?v=master_48`
     );
-    setData(fetchdata.data.data);
+    setData(fetchdata.data);
     setFlag(false);
   };
 
