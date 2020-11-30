@@ -228,7 +228,7 @@ export default function Check() {
   useEffect(() => {
     const fetchdata = async () => {
       const fetchcountry = await axios.post(
-        "https://webflow111.herokuapp.com/country"
+        "https://www.strompris.no/rest/municipalities"
       );
       // const countries = fetchcountry.data.data.map((element) => element.name);
       const countries = fetchcountry.data.data;
