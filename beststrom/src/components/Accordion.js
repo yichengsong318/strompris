@@ -42,7 +42,6 @@ const useStyles = makeStyles((theme) => ({
   },
   details: {
     alignItems: "center",
-    marginTop: -10,
     maxWidth: "1200px",
     marginLeft: "auto",
     marginRight: "auto",

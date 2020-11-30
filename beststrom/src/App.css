@@ -2815,7 +2815,7 @@ figcaption {
   overflow: hidden;
   width: 90%;
   max-width: 1200px;
-  margin: 10px auto;
+  margin: 10px auto 0px;
 }
 
 .spotpris-tab {
